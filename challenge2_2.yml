@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki-container
+spec:
+  selector:
+    matchLabels:
+      app: mediawiki-container
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mediawiki-container
+    spec:
+      containers:
+        - name: mediawiki-container
+          image: mediawiki:latest
+          volumeMounts:
+            - mountPath: /var/www/html/images
+              name: mediawiki-volume
+            - mountPath: /var/www/html/LocalSettings.php
+              name: mediawiki-localsettings\
+            - mountPath: /var/data/custom.csv
+              name: mediawiki-csvdata              
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: mediawiki-volume
+        - name: mediawiki-localsettings
+          hostPath:
+            path: /home/poc/mediawiki/LocalSettings.php
+            type: File
+            - name: mediawiki-csvdata            
+          hostPath:
+            path: /home/poc/mediawiki/custom.csv
+            type: File	

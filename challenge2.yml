@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: PODA
+spec:
+  containers:
+  - name: mediawiki-container
+    image: mediawiki:latest
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        memory: "400Mb"
+  restartPolicy: Never
+######################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: PODB
+spec:
+  containers:
+  - name: mediawiki-container
+    image: mediawiki:latest
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        memory: "200Mb"
+  restartPolicy: Never  
+########################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: PODC
+spec:
+  containers:
+  - name: mediawiki-container
+    image: mediawiki:latest
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        memory: "400Mb"
+  restartPolicy: Never
