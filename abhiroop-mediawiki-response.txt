@@ -1,0 +1,28 @@
+Challenge- I 
+We want to automate the deployment of mediawiki on docker/K8/OpenShift, we’d like to see code file.We want to assess your learnability and your current knowledge of containerizing an application using an orchestration platform like K8/OpenShift.
+Details => we’ll start with one instance of mediawiki running.
+That’ll be backed by a database server (MySql/postgres) running on a separate container.We expect this to be installed using these steps: Installing MediaWiki
+Expectations:
+•	Automated setup for the problem statement including the infrastructure setup using any IAC code (Terraform/Azure ARM Template/AWS Cloudformation/GCP) of your choice
+	[Abhiroop : I do not work on Infra and thus never worked for infra automation and focused on platform and app onboarding on cloud , thus skipping this part ]
+•	Adopt best practices in the tools which you are using. For example- Proper syntax and naming, Modular code etc.
+•	We expect your solution to be designed using orchestration tool of your choice e.g Openshift, Kubernetes (Use Any Hyperscaler PaaS) 
+•	Brownie points if the application is running.
+
+[Abhiroop : Refer challenge1.yml ]
+
+
+
+Challenge-ll
+Background: A k8s/Openshift cluster is shared among multiple teams to host their containerized applications and related components wherein each Team deploys their application components in their respective Namespace. Each Namespace comes with  set quotas for the total amount of memory and CPU that can be used by all Pods running in a namespace.  
+Situation: 
+Referring  Challenge I  example, create 3 replica of Pod and name them as POD A, POD B and POD C
+Write a code in YAML 
+
+1.	To deal with the resource crunch issue and ensure that POD A consumes 400 MB, POD B 200 MB and POC C 400 MB memory, so that all the pods can get the appropriate resources. 
+[Abhiroop : Refer challenge2.yml . We can use limits over pods which restricts their higher usages of compute resource]
+
+2.	MediaWiki Pod wants to access sample data stored in form of a .csv file ( You can create a sample CSV and put some max 2 rows and 2 column worth data), write a YAML script to make this .csv available to the running application pod. (We want to see where do you store the .csv file to make it accessible to the running application pod)
+[Abhiroop: Refer challenge2_2.yml]
+
+
