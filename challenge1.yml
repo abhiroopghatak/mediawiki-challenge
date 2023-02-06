@@ -1,0 +1,89 @@
+#########mediaWiki Deployment########
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki-container
+spec:
+  selector:
+    matchLabels:
+      app: mediawiki-container
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mediawiki-container
+    spec:
+      containers:
+        - name: mediawiki-container
+          image: mediawiki:latest
+          volumeMounts:
+            - mountPath: /var/www/html/images
+              name: mediawiki-volume
+            - mountPath: /var/www/html/LocalSettings.php
+              name: mediawiki-localsettings
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: mediawiki-volume
+        - name: mediawiki-localsettings
+          hostPath:
+            path: /home/ubuntu/mediawiki/LocalSettings.php
+            type: File
+            
+##################mediaWiki Service#########
+apiVersion: v1
+kind: Service
+metadata:
+  name: mediawiki-svc
+  labels:
+    app: mediawiki-container
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    app: mediawiki-container            
+            
+################DB Deployment##############
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki-db
+spec:
+  selector:
+    matchLabels:
+      app: mediawiki-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mediawiki-db
+    spec:
+      containers:
+        - name: mediawiki-db-container
+          image: ${mariadb_image_path}
+          env:
+            - name: MYSQL_DATABASE
+              value: my_wiki
+            - name: MYSQL_USER
+              value: wikiuser
+            - name: MYSQL_PASSWORD
+              value: example
+            - name: MYSQL_RANDOM_ROOT_PASSWORD
+              value: 'yes'
+              
+################DB Sevrice##############
+apiVersion: v1
+kind: Service
+metadata:
+  name: mediawiki-db-svc
+  labels:
+    app: mediawiki-db
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+      protocol: TCP
+  selector:
+    app: mediawiki-db
